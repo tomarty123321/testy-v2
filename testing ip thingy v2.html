@@ -7,13 +7,17 @@
     <script>
         // Function to fetch the IP address
         function getIP() {
-            fetch('https://api.ipify.org?format=json')  // Use the ipify API to get the player's IP address
-                .then(response => response.json())
-                .then(data => {
-                    // Return the IP as JSON (this will be sent back to the Roblox client)
-                    document.getElementById("ip").innerText = JSON.stringify({ "ip": data.ip });
-                });
-        }
+    console.log("Fetching IP...");  // Log to see if the function is running
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            console.log("Fetched IP: ", data.ip);  // Log the IP to check
+            document.getElementById("ip").innerText = JSON.stringify({ "ip": data.ip });
+        })
+        .catch(error => {
+            console.log("Error fetching IP: ", error);  // Log any errors
+        });
+}
 
         // Call getIP function when the page loads
         window.onload = getIP;
